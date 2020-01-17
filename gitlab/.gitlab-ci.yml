@@ -1,0 +1,17 @@
+before_script:
+  - pwd
+
+winnerServer01:
+  script:
+    - chmod -R 755 $CI_PROJECT_DIR/
+    - rsync -av --delete --exclude ".git" $CI_PROJECT_DIR/ /$CI_PROJECT_PATH
+    - cd /$CI_PROJECT_PATH
+    - pwd
+    - pm2 start ./config/pm2.json
+  stage: deploy
+  only:
+    - master
+  tags:
+    - winnerServer01
+
+
